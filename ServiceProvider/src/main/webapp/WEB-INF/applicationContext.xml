@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright 2016 Alexandre Fenyo - alex@fenyo.net - http://fenyo.net
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+
+    <!-- Ressources du contexte racine (root context) : composants visibles partout, donc notamment dans le contexte Spring associé à la servlet mitreid-azure -->
+	
+    <!-- importer les valeurs des paramètres de configuration de l'accès à Azure -->
+    <context:property-placeholder location="META-INF/config.properties" />
+	
+    <!-- fourniture de paramètres au contrôleur et aux vues Spring MVC -->
+    <bean id="oidcAttributes" class="net.fenyo.MITREidAzure.OidcAttributes">
+        <property name="debug" value="${net.fenyo.MITREidAzure.config.oidc.debug}" />
+    	<property name="startlogouturi" value="${net.fenyo.MITREidAzure.config.oidc.startlogouturi}" />
+	    <property name="afterlogouturi" value="${net.fenyo.MITREidAzure.config.oidc.afterlogouturi}" />
+	    <property name="fcbuttonuri" value="${net.fenyo.MITREidAzure.config.oidc.fcbuttonuri}" />
+	    <property name="sessionTimeout" value="${net.fenyo.MITREidAzure.config.oidc.sessiontimeout}" />
+	    <property name="idpKey" value="${net.fenyo.MITREidAzure.config.idp.key}" />
+	    <property name="idpIv" value="${net.fenyo.MITREidAzure.config.idp.iv}" />
+	    <property name="idpRedirectUri" value="${net.fenyo.MITREidAzure.config.idp.redirecturi}" />
+  	</bean>
+	
+	<!-- Permettre la configuration de la sécurité par les annotations -->
+	<security:global-method-security pre-post-annotations="enabled" proxy-target-class="true" authentication-manager-ref="authenticationManager">
+		<!--you could also wire in the expression handler up at the layer of the http filters. See https://jira.springsource.org/browse/SEC-1452 -->
+	</security:global-method-security>
+
+    <!--
+         Support des expressions dans les tags authorize des pages jsp.
+         ex.: <security:authorize access="isFullyAuthenticated()"> affiché uniquement si authentifié </security:authorize>
+    -->
+	<bean id="webexpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" /> 
+
+</beans>

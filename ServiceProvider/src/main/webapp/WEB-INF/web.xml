@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+<!--
+  Copyright 2016 Alexandre Fenyo - alex@fenyo.net - http://fenyo.net
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ -->
+
+<!-- CONTENEUR SPRING -->
+
+    <!-- Création du conteneur Spring qui va gérer la servlet qui orchestre la cinématique Azure et le filtrage des accès. -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+    <!-- Configuration du timeout de session à chaque création de session, via un listener d'évènements de session. -->
+	<!-- Ce listener est déclaré après le ContextLoaderListener de Spring car il importe des paramètres de configuration de l'accès à Azure
+	     depuis le bean oidcAttributes créé dans le root context de Spring par le listener ContextLoaderListener.
+	     Néanmoins, il n'y a pas de race-condition possible car l'accès au root context par le SessionListener ne se fait pas dans une méthode statique mais dans
+	     une méthode invoquée au moment de la création d'une session et une session ne peut pas être créée avant la fin de la création de tous les listeners.
+	     
+	     Plutôt que d'utiliser un SessionListener, on aurait plus simplement pu intégrer directement la configuration dans ce fichier, par ex. comme ceci :
+	       <session-config><session-timeout>60</session-timeout></session-config>
+	     mais il n'aurait alors pas été possible de configurer la durée spécifiée à partir du contenu du fichier config.properties.
+	     --> 
+	<listener>
+		<listener-class>net.fenyo.MITREidAzure.SessionListener</listener-class>
+	</listener>
+
+<!-- SERVLET SPRING MVC -->
+
+	<!-- Création de la servlet de gestion de la cinématique Azure. -->
+	<servlet>
+		<servlet-name>mitreid-azure</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<!-- Tous les accès au contexte sont gérés au travers de la servlet. -->
+	<servlet-mapping>
+		<servlet-name>mitreid-azure</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+<!-- FILTRE SPRING SECURITY -->
+
+	<!-- Création du filtre des accès au contexte. -->
+	<filter>
+	    <filter-name>springSecurityFilterChain</filter-name>
+	    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	     <init-param>
+	        <param-name>contextAttribute</param-name>
+	        <param-value>org.springframework.web.servlet.FrameworkServlet.CONTEXT.MITREidAzure</param-value>
+	    </init-param>
+	</filter>
+
+	<!-- Tous les accès au contexte sont traités par le filtre. -->
+	<filter-mapping>
+	    <filter-name>springSecurityFilterChain</filter-name>
+	    <url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+</web-app>
