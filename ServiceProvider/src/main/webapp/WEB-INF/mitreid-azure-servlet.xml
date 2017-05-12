@@ -91,6 +91,7 @@
               <property name="authorizationEndpointUri" value="${net.fenyo.MITREidAzure.config.oidc.authorizationendpointuri}" />
               <property name="tokenEndpointUri" value="${net.fenyo.MITREidAzure.config.oidc.tokenendpointuri}" />
               <property name="userInfoUri" value="${net.fenyo.MITREidAzure.config.oidc.userinfoendpointuri}" />
+              <property name="jwksUri" value="https://login.microsoftonline.com/common/discovery/keys" />
             </bean>
           </entry>
         </map>
@@ -107,18 +108,12 @@
               <property name="scope">
                 <set value-type="java.lang.String">
                   <value>openid</value>
-                  <value>gender</value>
-                  <value>birthdate</value>
-                  <value>birthcountry</value>
-                  <value>birthplace</value>
-                  <value>given_name</value>
-                  <value>family_name</value>
                   <value>email</value>
-                  <value>address</value>
-                  <value>preferred_username</value>
-                  <value>phone</value>
-                  <!-- <value>profile</value> -->
-                </set>
+                  <value>profile</value>
+                  <value>offline_access</value>
+                  <value>https://graph.microsoft.com/mail.read</value>
+                  <value>https://graph.microsoft.com/mail.send</value>
+				</set>
             </property>
 
             <property name="tokenEndpointAuthMethod" value="SECRET_POST" />

@@ -63,7 +63,7 @@
 	    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 	     <init-param>
 	        <param-name>contextAttribute</param-name>
-	        <param-value>org.springframework.web.servlet.FrameworkServlet.CONTEXT.MITREidAzure</param-value>
+	        <param-value>org.springframework.web.servlet.FrameworkServlet.CONTEXT.mitreid-azure</param-value>
 	    </init-param>
 	</filter>
 
