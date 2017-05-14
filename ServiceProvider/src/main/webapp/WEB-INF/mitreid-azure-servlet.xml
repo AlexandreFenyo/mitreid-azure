@@ -26,7 +26,7 @@
 	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2-2.0.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
-		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
@@ -67,7 +67,8 @@
     <!-- OIDCAuthenticationProvider se charge de contacter le user info endpoint avec l'authorization bearer pour récupérer les informations détaillées concernant l'utilisateur -->
     <security:global-method-security pre-post-annotations="enabled" proxy-target-class="true" authentication-manager-ref="authenticationManager" />
 
-    <bean id="openIdConnectAuthenticationProvider" class="org.mitre.openid.connect.client.OIDCAuthenticationProvider" />
+    <!-- <bean id="openIdConnectAuthenticationProvider" class="org.mitre.openid.connect.client.OIDCAuthenticationProvider" /> -->
+    <bean id="openIdConnectAuthenticationProvider" class="net.fenyo.MITREidAzure.OIDCAuthenticationProvider" />
 
     <security:authentication-manager alias="authenticationManager">
       <security:authentication-provider ref="openIdConnectAuthenticationProvider" />
@@ -90,7 +91,7 @@
               <property name="issuer" value="${net.fenyo.MITREidAzure.config.oidc.issuer}" />
               <property name="authorizationEndpointUri" value="${net.fenyo.MITREidAzure.config.oidc.authorizationendpointuri}" />
               <property name="tokenEndpointUri" value="${net.fenyo.MITREidAzure.config.oidc.tokenendpointuri}" />
-              <property name="userInfoUri" value="${net.fenyo.MITREidAzure.config.oidc.userinfoendpointuri}" />
+<!--               <property name="userInfoUri" value="${net.fenyo.MITREidAzure.config.oidc.userinfoendpointuri}" /> -->
               <property name="jwksUri" value="https://login.microsoftonline.com/common/discovery/keys" />
             </bean>
           </entry>

@@ -77,12 +77,12 @@
 
         <!-- versions des dépendances et des plugins opérationnelles en vigueur au 27 avril 2016 -->
         
-		<org.mitre-version>1.2.6</org.mitre-version>
+		<org.mitre-version>1.3.1</org.mitre-version>
+		
+		<org.springframework-version>4.3.5.RELEASE</org.springframework-version>
+		<org.springframework.security-version>4.2.2.RELEASE</org.springframework.security-version>
 
-		<org.springframework-version>4.2.5.RELEASE</org.springframework-version>
-		<org.springframework.security-version>4.0.4.RELEASE</org.springframework.security-version>
-
-		<org.slf4j-version>1.7.21</org.slf4j-version>
+		<org.slf4j-version>1.7.25</org.slf4j-version>
 		<org.log4j-version>1.2.17</org.log4j-version>
 
         <javax.servlet-version>2.5</javax.servlet-version>
@@ -91,8 +91,8 @@
 
         <junit-version>4.12</junit-version>
 
-        <maven-compiler-plugin-version>3.5.1</maven-compiler-plugin-version>
-        <maven-war-plugin-version>2.6</maven-war-plugin-version>
+        <maven-compiler-plugin-version>3.6.1</maven-compiler-plugin-version>
+        <maven-war-plugin-version>3.0.0</maven-war-plugin-version>
         <maven-resources-plugin-version>2.7</maven-resources-plugin-version>
         <jetty-maven-plugin-version>9.3.8.v20160314</jetty-maven-plugin-version>
         <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
@@ -191,13 +191,13 @@
         <dependency>
         	<groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-            <version>4.0.4.RELEASE</version>
+            <version>4.2.2.RELEASE</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.security.oauth</groupId>
             <artifactId>spring-security-oauth2</artifactId>
-            <version>2.0.9.RELEASE</version>
+            <version>2.1.0.RELEASE</version>
             <!--
                 Spring OAuth 2.0.9 induit des dépendances transitives vers des composants anciens du framework Spring.
                 On s'affranchit donc de ces dépendances.
@@ -264,7 +264,8 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>2.3.4</version>
+            <!-- <version>2.3.4</version> -->
+            <version>2.9.0.pr2</version>
         </dependency>
 				
 		<!-- Traces -->
