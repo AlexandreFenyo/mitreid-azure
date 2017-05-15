@@ -91,7 +91,7 @@ public class WebController {
 		}
 
 		final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		final OIDCAuthenticationToken oidcauth = (OIDCAuthenticationToken) auth;
+final OIDCAuthenticationToken oidcauth = (OIDCAuthenticationToken) auth;
 
 		// exemples d'accès en Java aux informations d'authentification :
 		//   oidcauth.getIdToken().getJWTClaimsSet().getIssuer()
@@ -106,6 +106,11 @@ public class WebController {
 //		mav.addObject("oidcBirthplace", oidcauth.getUserInfo().getSource().get("birthplace"));
 //		mav.addObject("oidcBirthcountry", oidcauth.getUserInfo().getSource().get("birthcountry"));
 
+		oidcauth.getUserInfo().setEmail(oidcauth.getUserInfo().getSource().get("mail").toString());
+		
+		mav.addObject("oidcBirthplace", oidcauth.getUserInfo().getSource().get("displayName"));
+
+		
 		// on injecte dans le modèle les paramètres de configuration, notamment pour le bouton FranceConnect
 		mav.addObject("oidcAttributes", oidcAttributes);
 

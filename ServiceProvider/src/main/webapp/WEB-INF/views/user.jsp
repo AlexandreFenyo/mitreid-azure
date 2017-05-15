@@ -71,6 +71,8 @@ valeur complète du token : ${ idToken.parsedString }
     <hr/>
 
     <pre>
+
+
 Utilisateur (user info) :
   - sujet (utilisateur)  : ${ userInfo.sub } 
   - genre                : ${ userInfo.gender } 
