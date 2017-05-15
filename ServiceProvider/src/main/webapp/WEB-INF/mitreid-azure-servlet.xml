@@ -62,13 +62,14 @@
     <mvc:interceptors>
       <bean class="org.mitre.openid.connect.web.UserInfoInterceptor" />
     </mvc:interceptors>
+	<!-- CREER UN NOUVEL INTERCEPTOR POUR METTRE LES USER INFOS SPECIFIQUES DANS LE CONTEXTE -->
 	
     <!-- signaler à Spring Security d'utiliser un authentication manager contenant un authentication provider qui est une instance de OIDCAuthenticationProvider fourni par MitreID Connect -->
     <!-- OIDCAuthenticationProvider se charge de contacter le user info endpoint avec l'authorization bearer pour récupérer les informations détaillées concernant l'utilisateur -->
     <security:global-method-security pre-post-annotations="enabled" proxy-target-class="true" authentication-manager-ref="authenticationManager" />
 
-    <!-- <bean id="openIdConnectAuthenticationProvider" class="org.mitre.openid.connect.client.OIDCAuthenticationProvider" /> -->
-    <bean id="openIdConnectAuthenticationProvider" class="net.fenyo.MITREidAzure.OIDCAuthenticationProvider" />
+    <bean id="openIdConnectAuthenticationProvider" class="org.mitre.openid.connect.client.OIDCAuthenticationProvider" />
+    <!-- <bean id="openIdConnectAuthenticationProvider" class="net.fenyo.MITREidAzure.OIDCAuthenticationProvider" /> -->
 
     <security:authentication-manager alias="authenticationManager">
       <security:authentication-provider ref="openIdConnectAuthenticationProvider" />
@@ -91,7 +92,7 @@
               <property name="issuer" value="${net.fenyo.MITREidAzure.config.oidc.issuer}" />
               <property name="authorizationEndpointUri" value="${net.fenyo.MITREidAzure.config.oidc.authorizationendpointuri}" />
               <property name="tokenEndpointUri" value="${net.fenyo.MITREidAzure.config.oidc.tokenendpointuri}" />
-<!--               <property name="userInfoUri" value="${net.fenyo.MITREidAzure.config.oidc.userinfoendpointuri}" /> -->
+<property name="userInfoUri" value="${net.fenyo.MITREidAzure.config.oidc.userinfoendpointuri}" /> 
               <property name="jwksUri" value="https://login.microsoftonline.com/common/discovery/keys" />
             </bean>
           </entry>
