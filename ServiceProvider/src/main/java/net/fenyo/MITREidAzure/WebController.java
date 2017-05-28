@@ -106,7 +106,8 @@ final OIDCAuthenticationToken oidcauth = (OIDCAuthenticationToken) auth;
 //		mav.addObject("oidcBirthplace", oidcauth.getUserInfo().getSource().get("birthplace"));
 //		mav.addObject("oidcBirthcountry", oidcauth.getUserInfo().getSource().get("birthcountry"));
 
-		oidcauth.getUserInfo().setEmail(oidcauth.getUserInfo().getSource().get("mail").toString());
+		if (oidcauth.getUserInfo() != null)
+			oidcauth.getUserInfo().setEmail(oidcauth.getUserInfo().getSource().get("mail").toString());
 		
 		mav.addObject("oidcBirthplace", oidcauth.getUserInfo().getSource().get("displayName"));
 
