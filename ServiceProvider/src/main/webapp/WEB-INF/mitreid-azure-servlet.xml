@@ -81,7 +81,7 @@
     <!-- création d'un bean servant à stocker l'URI correspondant au fournisseur d'identité (provider représentant l'issuer) Azure, ce bean étant fourni par la suite au filtre MitreID Connect -->
     <bean class="org.mitre.openid.connect.client.service.impl.StaticSingleIssuerService" id="staticIssuerService">
       <property name="issuer" value="${net.fenyo.MITREidAzure.config.oidc.issuer}" />
-    </bean>	
+    </bean>
 
     <!-- création d'un bean stockant les trois enpoints du fournisseur d'identité Azure, ce bean étant fourni par la suite au filtre MITREid Connect -->
     <bean class="org.mitre.openid.connect.client.service.impl.StaticServerConfigurationService" id="staticServerConfigurationService">
