@@ -16,6 +16,8 @@ package net.fenyo.MITREidAzure;
  * limitations under the License.
 */
 
+// http://localhost:8080/mitreid-azure/openid_connect_login
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.mitre.openid.connect.model.OIDCAuthenticationToken;
